@@ -7,9 +7,9 @@ This repository implements the PDTS and baselines proposed in the paper **"Fast 
 ### Installation
 ```bash
 conda create -n pdts_dr python=3.7 -y
-conda create -n pdts_dr
+conda activate pdts_dr
 
-# Install dependencies (mujoco required)
+# Install dependencies (mujoco210 required)
 pip install -e .
 # Install gym-ergojr
 pip install git+https://github.com/fgolemo/gym-ergojr.git
