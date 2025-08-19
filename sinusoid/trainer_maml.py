@@ -57,9 +57,9 @@ class SineMAML():
         self.best_test_score = 100
         self.best_test_cvar = 100
 
-        if self.sampling_strategy == "group_dro":
+        if self.sampling_strategy == "gdrm":
             self.adv_probs = torch.ones(self.num_metatasks).to(self.device)
-            self.robust_step_size = 0.001
+            self.robust_step_size = 0.01
 
 
     def inner_loop(self, task):
@@ -134,7 +134,7 @@ class SineMAML():
                 # pdb.set_trace()
                 metaloss_tensor = torch.stack(metaloss_list)
                 # metaloss_list = torch.tensor(metaloss_list)
-                self.adv_probs = self.adv_probs * torch.exp(self.robust_step_size * metaloss_tensor.data)
+                self.adv_probs = torch.exp(self.robust_step_size * metaloss_tensor.data)
                 self.adv_probs = self.adv_probs / (self.adv_probs.sum()) * self.num_metatasks
                 metaloss_tensor = metaloss_tensor @ self.adv_probs
                 metaloss_sum = metaloss_tensor.sum()
